@@ -1,0 +1,18 @@
+% Car information
+models = {'Ford Fiesta', 'Ford Focus', 'Chevy Volt', 'Chevy Cruz', ...
+          'Toyota Camry', 'Toyota Camry Hybrid', 'Toyota Corolla', 'Toyota Prius'};
+prices = [14200, 20705, 39312, 16800, 22955, 26500, 16500, 19950];
+downs = [500, 750, 1000, 500, 0, 0, 900, 1000];
+rates = [0.045/12, 0.0438/12, 0.0328/12, 0.044/12, 0.048/12, 0.03/12, 0.0425/12, 0.043/12];
+durations = [60, 60, 48, 60, 60, 48, 60, 60];
+
+% Calculate monthly payments
+payments = (prices - downs) .* rates ./ (1 - (1 + rates) .^ (-durations));
+
+% Check affordability
+budget = 500;
+for i = 1:length(models)
+    if payments(i) <= budget && payments(i) * durations(i) <= budget * 60
+        fprintf('You can afford the %s.\n', models{i});
+    end
+end
