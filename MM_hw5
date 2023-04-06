@@ -1,0 +1,57 @@
+log_P = [5.533, 6.040, 3.740, 4.694, 6.127, 2.562, 3.398, 4.893, 5.939, 4.147, 4.375, 4.848, 5.484, 5.139, 6.415];
+log_V = [0.681, 0.770, 0.520, 0.690, 0.750, 0.441, 0.357, 0.587, 0.719, 0.569, 0.514, 0.634, 0.646, 0.642, 0.704];
+% Population 数据
+P = [341948, 1092759, 5491, 49375, 1340000, 365, 2500, 78200, 867023, 14000, 23700, 70700, 304500, 138000, 2602000];
+
+% Mean velocity 数据
+V = [4.81, 5.88, 3.31, 4.90, 5.62, 2.76, 2.27, 3.85, 5.21, 3.70, 3.27, 4.31, 4.42, 4.39, 5.05];
+% 绘制散点图
+scatter(log_P, log_V)
+
+hold on
+
+% 生成预测曲线的数据点
+P_predict = linspace(min(log_P), max(log_P), 100);
+V_predict = 0.37 * P_predict + 0.66;
+
+% 绘制预测曲线
+plot(P_predict, V_predict)
+
+% 添加标签和标题
+xlabel('Population')
+ylabel('Mean Velocity')
+title('Scatter Plot with Predicted Curve')
+
+% 显示图像
+hold off
+
+p = polyfit(P,V,14); % 进行14阶多项式拟合
+x_fit = linspace(min(P),max(P)); % 生成等间距采样点
+y_fit = polyval(p,x_fit); % 计算拟合值
+plot(P,V,'o',x_fit,y_fit); % 绘制拟合曲线和原始数据散点图
+
+% input data
+X = [17 19 20 22 23 25 31 32 33 36 37 38 39 41];
+Y = [19 25 32 51 57 71 141 123 187 192 205 252 248 294];
+
+% create scatterplot
+scatter(X,Y);
+title('Scatterplot of Diameter vs Volume');
+xlabel('Diameter (in)');
+ylabel('Volume (board feet/10)');
+
+% fit a cubic polynomial
+p = polyfit(X, Y, 13);
+
+% generate predicted values for diameters from 17 to 41
+new_X = linspace(17, 41, 100);
+pred_Y = polyval(p, new_X);
+
+% plot the results
+scatter(X,Y);
+hold on;
+plot(new_X, pred_Y, 'r');
+title('Polynomial Fit to Diameter vs Volume');
+xlabel('Diameter (in)');
+ylabel('Volume (board feet/10)');
+legend('Data', '13th Polynomial Fit', 'Location', 'northwest');
