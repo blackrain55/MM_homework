@@ -1,0 +1,25 @@
+% 定义目标函数系数向量
+f = [1.8; 3.5; 0.4; 1];
+
+% 定义不等式约束矩阵和右侧向量
+A = [-0.5, -1, -2, -6;
+     -2, -4, -0.5, -1;
+     -5, -2, -1, -2.5];
+b = [-40; -20; -45];
+
+% 定义变量下界
+lb = [0; 0; 0; 0];
+
+% 使用线性规划求解器求解问题
+[x, fval, exitflag] = linprog(f, A, b, [], [], lb);
+
+% 显示结果
+if exitflag == 1
+    fprintf('最小费用为 $%.2f，达到最小费用时饲料用量分别为：\n', fval);
+    fprintf('Hay: %.2f bales/week\n', x(1));
+    fprintf('Oats: %.2f sacks/week\n', x(2));
+    fprintf('Feeding blocks: %.2f blocks/week\n', x(3));
+    fprintf('High-protein concentrate: %.2f sacks/week\n', x(4));
+else
+    disp('无解');
+end
